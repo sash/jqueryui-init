@@ -46,25 +46,18 @@
 		})
 		return this
 	}
-	// Custom widgets
-	$.widget('ui.warning', {
-		_init: function(){
-			this.element.prepend('<span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>').wrap('<div class="ui-widget"></div>').wrap('<div class="ui-state-error ui-corner-all"></div>')
-		}
-	})
-	$.widget('ui.info', {
-		_init: function(){
-			this.element.prepend('<span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>').wrap('<div class="ui-widget"></div>').wrap('<div class="ui-state-highlight ui-corner-all"></div>')
-		}
-	})
+	
+	var uiInit=[];
+	$.init=function(name){
+		uiInit.push(name)
+		return $
+	}
+	$.init('button').init('buttonset').init('accordion').init('datepicker').init('dialog').init('progressbar').init('slider').init('tabs')
+	.init('draggable').init('droppable').init('resizable').init('selectable').init('sortable');
 	$('*').live('ui-update', function(e){
-		// Widgets
-		$(e.target).ui('button').ui('buttonset').ui('accordion').ui('datepicker').ui('dialog').ui('progressbar').ui('slider').ui('tabs')
-		// Interactions
-		.ui('draggable').ui('droppable').ui('resizable').ui('selectable').ui('sortable')
-		// Custom
-		.ui('warning').ui('info')
-		
+		$.each(uiInit, function(i, name){
+			$(e.target).ui(name)
+		})
 		e.stopPropagation();
 	})
 	$(function(){$('body').trigger('ui-update')})
