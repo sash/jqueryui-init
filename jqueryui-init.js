@@ -35,7 +35,8 @@
 						l = k[i]
 					}
 				}
-				t[l]=that.attr(v);
+				var set = parseInt(that.attr(v))+'' == that.attr(v) ? parseInt(that.attr(v)) : ( parseFloat(that.attr(v))+'' == that.attr(v) ? parseFloat(that.attr(v)) : that.attr(v) )
+				t[l]=set;
 			})
 			return res
 		}
