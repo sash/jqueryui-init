@@ -28,11 +28,32 @@
 		})
 		$.uiinit('warning').uiinit('info');
 		
-		// When loading html with ajax trigger ui-update on the changed element, to initialize the components
+		// Using the uidestroy event you can implement a cleanup when loading new html via ajax
+		// You could do something like this:
+		/*
+		(function(){
+			var old_html = $.fn.html;
+			$.fn.html = function (content){
+				if (typeof content == 'undefined') return old_html.apply(this, arguments)
+				else{
+					this.trigger('uidestroy')
+					return old_html.apply(this, arguments).trigger('uiinit')
+				}
+			}
+		})()
+		*/
+	
+		
+		
 		$(function(){
-			
+			// When loading html with ajax trigger ui-update on the changed element, to initialize the components
 			$.get('example_load.html', function(loaded){
 				$('#ajax-loaded').html(loaded).trigger('uiinit')
+			})
+			// If you want to deinitialize the components (initialized in the previous example) you can trigger uidestroy
+			$('#unload-datepicker').click(function(e){
+				e.preventDefault();
+				$('#datepicker-container').trigger('uidestroy')
 			})
 			
 		})
@@ -56,6 +77,12 @@
 	</div>
 	
 	<div id="ajax-loaded"></div>
+	<div id="datepicker-container">
+		<p>Select date</p>
+		<input data-ui-datepicker id="datepicker" name="date" type="text"/>
+	</div>
+	
+	<a href="#" id="unload-datepicker">unload datepicker</a>
 </body>  
 </html>
 

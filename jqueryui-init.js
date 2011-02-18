@@ -1,5 +1,5 @@
 /*!
- * jQueryUI Init v0.0.1
+ * jQueryUI Init v0.0.2
  * http://github.com/sash/jqueryui-init/
  *
  * Copyright 2010, Alexander Alexiev
@@ -43,7 +43,15 @@
 	}
 	$.fn.uiinit=function(element){
 		this.find('[data-ui-'+element+']').each(function(){
+			// Initialize the widget
 			eval('$(this).'+element+'($(this).attrs("data-ui-'+element+'-"))')
+		})
+		return this
+	}
+	$.fn.uidestroy=function(element){
+		this.find('[data-ui-'+element+']').each(function(){
+			// Destroy the widget
+			eval('$(this).'+element+'("destroy")')
 		})
 		return this
 	}
@@ -52,7 +60,8 @@
 	var domready = false;
 	$.uiinit=function(name){
 		uiinit.push(name);
-		if (domready)$('body').uiinit(name)
+		// A fix that allows widgets added after the dom has loaded to be also initialized
+		if (domready) $('body').uiinit(name)
 		return $
 	}
 	$.uiinit('button').uiinit('buttonset').uiinit('accordion').uiinit('datepicker').uiinit('dialog').uiinit('progressbar').uiinit('slider').uiinit('tabs')
@@ -60,6 +69,12 @@
 	$('*').live('uiinit', function(e){
 		$.each(uiinit, function(i, name){
 			$(e.target).uiinit(name)
+		})
+		e.stopPropagation();
+	})
+	$('*').live('uidestroy', function(e){
+		$.each(uiinit, function(i, name){
+			$(e.target).uidestroy(name)
 		})
 		e.stopPropagation();
 	})
