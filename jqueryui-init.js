@@ -41,7 +41,7 @@
 			return res
 		}
 	}
-	$.fn.ui=function(element){
+	$.fn.init=function(element){
 		this.find('[data-ui-'+element+']').each(function(){
 			eval('$(this).'+element+'($(this).attrs("data-ui-'+element+'-"))')
 		})
@@ -57,7 +57,7 @@
 	.init('draggable').init('droppable').init('resizable').init('selectable').init('sortable');
 	$('*').live('ui-init', function(e){
 		$.each(uiInit, function(i, name){
-			$(e.target).ui(name)
+			$(e.target).init(name)
 		})
 		e.stopPropagation();
 	})
