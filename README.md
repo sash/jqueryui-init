@@ -26,4 +26,4 @@ See example.html for a more thorough example of the usage
 
 jQuery functions
 ----------------
-As a bonus you get .attrs function that returns an object with all attributes on the element. Use .init('widget-name') to apply data-ui-* behaviour for your custom widgets
+As a bonus you get .attrs function that returns an object with all attributes on the element. Use .uiinit('widget-name') to apply data-ui-* behaviour for your custom widgets

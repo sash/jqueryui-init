@@ -26,13 +26,13 @@
 					.wrap('<div class="ui-state-highlight ui-corner-all"></div>')
 			}
 		})
-		$.init('warning').init('info');
+		$.uiinit('warning').uiinit('info');
 		
 		// When loading html with ajax trigger ui-update on the changed element, to initialize the components
 		$(function(){
 			
 			$.get('example_load.html', function(loaded){
-				$('#ajax-loaded').html(loaded).trigger('ui-update')
+				$('#ajax-loaded').html(loaded).trigger('uiinit')
 			})
 			
 		})

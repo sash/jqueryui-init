@@ -41,25 +41,27 @@
 			return res
 		}
 	}
-	$.fn.init=function(element){
+	$.fn.uiinit=function(element){
 		this.find('[data-ui-'+element+']').each(function(){
 			eval('$(this).'+element+'($(this).attrs("data-ui-'+element+'-"))')
 		})
 		return this
 	}
 	
-	var uiInit=[];
-	$.init=function(name){
-		uiInit.push(name)
+	var uiinit=[];
+	var domready = false;
+	$.uiinit=function(name){
+		uiinit.push(name);
+		if (domready)$('body').uiinit(name)
 		return $
 	}
-	$.init('button').init('buttonset').init('accordion').init('datepicker').init('dialog').init('progressbar').init('slider').init('tabs')
-	.init('draggable').init('droppable').init('resizable').init('selectable').init('sortable');
-	$('*').live('ui-init', function(e){
-		$.each(uiInit, function(i, name){
-			$(e.target).init(name)
+	$.uiinit('button').uiinit('buttonset').uiinit('accordion').uiinit('datepicker').uiinit('dialog').uiinit('progressbar').uiinit('slider').uiinit('tabs')
+	.uiinit('draggable').uiinit('droppable').uiinit('resizable').uiinit('selectable').uiinit('sortable');
+	$('*').live('uiinit', function(e){
+		$.each(uiinit, function(i, name){
+			$(e.target).uiinit(name)
 		})
 		e.stopPropagation();
 	})
-	$(function(){$('body').trigger('ui-init')})
+	$(function(){$('body').trigger('uiinit'); domready = true;})
 })(jQuery)
