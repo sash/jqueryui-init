@@ -4,9 +4,9 @@ jQueryUI Init
 
 Features:
 ---------
-* Assigning data-ui-tabs attrubute to the div that holds your ul and tab divs is all you need to setup the tabs widget
+* Assigning data-ui-tabs attrubute (for instance) to the div that holds your ul and tab divs is all you need to setup the tabs widget
 * Supports all of the current standart widgets and can be easily configured to support your custom widgets
-* When loading html with ajax, call trigger('ui-update') on the element that holds the new dom, and all widgets will be initialized
+* When loading html with ajax, call trigger('uiinit') on the element that holds the new dom, and all widgets will be initialized
 
 > Example: 
 
@@ -26,4 +26,4 @@ See example.html for a more thorough example of the usage
 
 jQuery functions
 ----------------
-As a bonus you get .attrs function that returns an object with all attributes on the element. Use .uiinit('widget-name') to apply data-ui-* behaviour for your custom widgets
+As a bonus you get .attrs function that returns an object with all attributes on the element. Use .uiinit('widget-name') to apply data-ui-* behaviour for your custom widgets. Use $.uiinit('widget-name') to add your custom widget to the lsit of widgets, that respond to uiinit and uidestroy events
