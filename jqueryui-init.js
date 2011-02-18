@@ -54,11 +54,11 @@
 	}
 	$.init('button').init('buttonset').init('accordion').init('datepicker').init('dialog').init('progressbar').init('slider').init('tabs')
 	.init('draggable').init('droppable').init('resizable').init('selectable').init('sortable');
-	$('*').live('ui-update', function(e){
+	$('*').live('ui-init', function(e){
 		$.each(uiInit, function(i, name){
 			$(e.target).ui(name)
 		})
 		e.stopPropagation();
 	})
-	$(function(){$('body').trigger('ui-update')})
+	$(function(){$('body').trigger('ui-init')})
 })(jQuery)
