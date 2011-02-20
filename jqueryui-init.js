@@ -42,14 +42,14 @@
 		}
 	}
 	$.fn.uiinit=function(element){
-		this.find('[data-ui-'+element+']').each(function(){
+		this.find('[data-ui-'+element+']').add(this.is('[data-ui-'+element+']')?this:null).each(function(){
 			// Initialize the widget
 			eval('$(this).'+element+'($(this).attrs("data-ui-'+element+'-"))')
 		})
 		return this
 	}
 	$.fn.uidestroy=function(element){
-		this.find('[data-ui-'+element+']').each(function(){
+		this.find('[data-ui-'+element+']').add(this.is('[data-ui-'+element+']')?this:null).each(function(){
 			// Destroy the widget
 			eval('$(this).'+element+'("destroy")')
 		})
