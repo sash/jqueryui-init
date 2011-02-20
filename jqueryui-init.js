@@ -41,15 +41,19 @@
 			return res
 		}
 	}
-	$.fn.uiinit=function(element){
-		this.find('[data-ui-'+element+']').add(this.is('[data-ui-'+element+']')?this:null).each(function(){
+	$.fn.uiinit=function(element, inner){
+		var t = this.find('[data-ui-'+element+']')
+		if (!inner && this.is('[data-ui-'+element+']')){ t = t.size() ? this : t.add(this); }
+		t.each(function(){
 			// Initialize the widget
 			eval('$(this).'+element+'($(this).attrs("data-ui-'+element+'-"))')
 		})
 		return this
 	}
-	$.fn.uidestroy=function(element){
-		this.find('[data-ui-'+element+']').add(this.is('[data-ui-'+element+']')?this:null).each(function(){
+	$.fn.uidestroy=function(element, inner){
+		var t = this.find('[data-ui-'+element+']')
+		if (!inner && this.is('[data-ui-'+element+']')){ t = t.size() ? this : t.add(this); }
+		t.each(function(){
 			// Destroy the widget
 			eval('$(this).'+element+'("destroy")')
 		})
@@ -75,6 +79,18 @@
 	$('*').live('uidestroy', function(e){
 		$.each(uiinit, function(i, name){
 			$(e.target).uidestroy(name)
+		})
+		e.stopPropagation();
+	})
+	$('*').live('uiinit-inner', function(e){
+		$.each(uiinit, function(i, name){
+			$(e.target).uiinit(name, true)
+		})
+		e.stopPropagation();
+	})
+	$('*').live('uidestroy-inner', function(e){
+		$.each(uiinit, function(i, name){
+			$(e.target).uidestroy(name, true)
 		})
 		e.stopPropagation();
 	})
