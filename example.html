@@ -36,8 +36,8 @@
 			$.fn.html = function (content){
 				if (typeof content == 'undefined') return old_html.apply(this, arguments)
 				else{
-					this.trigger('uidestroy')
-					return old_html.apply(this, arguments).trigger('uiinit')
+					this.trigger('uidestroy', 'inner')
+					return old_html.apply(this, arguments).trigger('uiinit', 'inner')
 				}
 			}
 		})()

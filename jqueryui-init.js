@@ -70,27 +70,15 @@
 	}
 	$.uiinit('button').uiinit('buttonset').uiinit('accordion').uiinit('datepicker').uiinit('dialog').uiinit('progressbar').uiinit('slider').uiinit('tabs')
 	.uiinit('draggable').uiinit('droppable').uiinit('resizable').uiinit('selectable').uiinit('sortable');
-	$('*').live('uiinit', function(e){
+	$('*').live('uiinit', function(e, inner){
 		$.each(uiinit, function(i, name){
-			$(e.target).uiinit(name)
+			$(e.target).uiinit(name, inner)
 		})
 		e.stopPropagation();
 	})
-	$('*').live('uidestroy', function(e){
+	$('*').live('uidestroy', function(e, inner){
 		$.each(uiinit, function(i, name){
-			$(e.target).uidestroy(name)
-		})
-		e.stopPropagation();
-	})
-	$('*').live('uiinit-inner', function(e){
-		$.each(uiinit, function(i, name){
-			$(e.target).uiinit(name, true)
-		})
-		e.stopPropagation();
-	})
-	$('*').live('uidestroy-inner', function(e){
-		$.each(uiinit, function(i, name){
-			$(e.target).uidestroy(name, true)
+			$(e.target).uidestroy(name, inner)
 		})
 		e.stopPropagation();
 	})

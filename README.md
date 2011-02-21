@@ -7,6 +7,7 @@ Features:
 * Assigning data-ui-tabs attrubute (for instance) to the div that holds your ul and tab divs is all you need to setup the tabs widget
 * Supports all of the current standart widgets and can be easily configured to support your custom widgets
 * When loading html with ajax, call trigger('uiinit') on the element that holds the new dom, and all widgets will be initialized
+ * If you only changed the innerHTML of the element, call trigger('uiinit',true) to skip reinitializing the containing element
 
 > Example: 
 
