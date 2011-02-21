@@ -48,7 +48,7 @@
 		$(function(){
 			// When loading html with ajax trigger ui-update on the changed element, to initialize the components
 			$.get('example_load.html', function(loaded){
-				$('#ajax-loaded').html(loaded).trigger('uiinit')
+				$('#ajax-loaded').html(loaded).trigger('uiinit', true)
 			})
 			// If you want to deinitialize the components (initialized in the previous example) you can trigger uidestroy
 			$('#unload-datepicker').click(function(e){
