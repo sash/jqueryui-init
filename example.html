@@ -36,8 +36,8 @@
 			$.fn.html = function (content){
 				if (typeof content == 'undefined') return old_html.apply(this, arguments)
 				else{
-					this.trigger('uidestroy', 'inner')
-					return old_html.apply(this, arguments).trigger('uiinit', 'inner')
+					this.uidestroy('inner')
+					return old_html.apply(this, arguments).uiinit('inner')
 				}
 			}
 		})()
@@ -48,12 +48,12 @@
 		$(function(){
 			// When loading html with ajax trigger ui-update on the changed element, to initialize the components
 			$.get('example_load.html', function(loaded){
-				$('#ajax-loaded').html(loaded).trigger('uiinit', true)
+				$('#ajax-loaded').html(loaded).uiinit(true)
 			})
 			// If you want to deinitialize the components (initialized in the previous example) you can trigger uidestroy
 			$('#unload-datepicker').click(function(e){
 				e.preventDefault();
-				$('#datepicker-container').trigger('uidestroy')
+				$('#datepicker-container').uidestroy().css('color', 'red')
 			})
 			
 		})

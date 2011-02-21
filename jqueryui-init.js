@@ -1,5 +1,5 @@
 /*!
- * jQueryUI Init v0.0.2
+ * jQueryUI Init v0.0.3
  * http://github.com/sash/jqueryui-init/
  *
  * Copyright 2010, Alexander Alexiev
@@ -41,7 +41,7 @@
 			return res
 		}
 	}
-	$.fn.uiinit=function(element, inner){
+	$.fn._uiinit=function(element, inner){
 		var t = this.find('[data-ui-'+element+']')
 		if (!inner && this.is('[data-ui-'+element+']')){ t = t.size() ? this : t.add(this); }
 		t.each(function(){
@@ -50,7 +50,7 @@
 		})
 		return this
 	}
-	$.fn.uidestroy=function(element, inner){
+	$.fn._uidestroy=function(element, inner){
 		var t = this.find('[data-ui-'+element+']')
 		if (!inner && this.is('[data-ui-'+element+']')){ t = t.size() ? this : t.add(this); }
 		t.each(function(){
@@ -58,6 +58,30 @@
 			eval('$(this).'+element+'("destroy")')
 		})
 		return this
+	}
+	$.fn.uiinit=function(inner){
+		var el = this
+		this.data('uiinited-inner', true)
+		if (!inner) this.data('uiinited-self', true)
+		$.each(uiinit, function(i, name){
+			el._uiinit(name, inner)
+		})
+		return this
+	}
+	$.fn.uidestroy=function(inner){
+		var el = this
+		this.data('uiinited-inner', false)
+		if (!inner) this.data('uiinited-self', false)
+		$.each(uiinit, function(i, name){
+			el._uidestroy(name, inner)
+		})
+		return this
+	}
+	$.fn.uiupdate=function(inner){
+		if ((!inner && this.data('uiinited-self')) || (inner && this.data('uiinited-inner'))){
+			this.uidestroy(inner)
+		}
+		return this.uiinit(inner)
 	}
 	
 	var uiinit=[];
@@ -70,17 +94,6 @@
 	}
 	$.uiinit('button').uiinit('buttonset').uiinit('accordion').uiinit('datepicker').uiinit('dialog').uiinit('progressbar').uiinit('slider').uiinit('tabs')
 	.uiinit('draggable').uiinit('droppable').uiinit('resizable').uiinit('selectable').uiinit('sortable');
-	$('*').live('uiinit', function(e, inner){
-		$.each(uiinit, function(i, name){
-			$(e.target).uiinit(name, inner)
-		})
-		e.stopPropagation();
-	})
-	$('*').live('uidestroy', function(e, inner){
-		$.each(uiinit, function(i, name){
-			$(e.target).uidestroy(name, inner)
-		})
-		e.stopPropagation();
-	})
-	$(function(){$('body').trigger('uiinit'); domready = true;})
+	
+	$(function(){$('body').uiinit(); domready = true;})
 })(jQuery)
