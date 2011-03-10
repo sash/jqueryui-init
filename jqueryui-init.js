@@ -66,6 +66,7 @@
 		$.each(uiinit, function(i, name){
 			el._uiinit(name, inner)
 		})
+		this.trigger('uiinit');
 		return this
 	}
 	$.fn.uidestroy=function(inner){
@@ -75,6 +76,7 @@
 		$.each(uiinit, function(i, name){
 			el._uidestroy(name, inner)
 		})
+		this.trigger('uidestroy');
 		return this
 	}
 	$.fn.uiupdate=function(inner){
