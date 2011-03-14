@@ -91,7 +91,7 @@
 	$.uiinit=function(name){
 		uiinit.push(name);
 		// A fix that allows widgets added after the dom has loaded to be also initialized
-		if (domready) $('body').uiinit(name)
+		if (domready) $('body')._uiinit(name)
 		return $
 	}
 	$.uiinit('button').uiinit('buttonset').uiinit('accordion').uiinit('datepicker').uiinit('dialog').uiinit('progressbar').uiinit('slider').uiinit('tabs')
