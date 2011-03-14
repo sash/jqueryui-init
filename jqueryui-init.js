@@ -45,7 +45,7 @@
 		'_uiinit':function(element, inner, selfOnly){
 			var t;
 			if (selfOnly){
-				r = $();
+				t = $();
 			}
 			else{
 				t = this.find('[data-ui-'+element+']')	
@@ -53,18 +53,18 @@
 			if ((!inner || selfOnly) && this.is('[data-ui-'+element+']')){ t = t.size() ? this : t.add(this); }
 			t.each(function(){
 				// Prevent dual init
-				if (!this.data('uiinited-'+element)){
-					this.data('uiinited-'+element, true)
+				if (!$(this).data('uiinited-'+element)){
+					$(this).data('uiinited-'+element, true)
 					// Initialize the widget
 					eval('$(this).'+element+'($(this).attrs("data-ui-'+element+'-"))')
 				}
 			})
 			return this
 		},
-		'_uidestroy':function(element, inner){
+		'_uidestroy':function(element, inner, selfOnly){
 			var t;
 			if (selfOnly){
-				r = $();
+				t = $();
 			}
 			else{
 				t = this.find('[data-ui-'+element+']')	
@@ -72,8 +72,8 @@
 			if ((!inner || selfOnly) && this.is('[data-ui-'+element+']')){ t = t.size() ? this : t.add(this); }
 			t.each(function(){
 				// Prevent dual destroy
-				if (this.data('uiinited-'+element)){
-					this.data('uiinited-'+element, false)
+				if ($(this).data('uiinited-'+element)){
+					$(this).data('uiinited-'+element, false)
 					// Destroy the widget
 					eval('$(this).'+element+'("destroy")')
 				}

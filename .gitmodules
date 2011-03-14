@@ -1,0 +1,3 @@
+[submodule "livequery"]
+	path = livequery
+	url = https://github.com/brandonaaron/livequery.git
