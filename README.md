@@ -4,15 +4,15 @@ jQueryUI Init
 
 Features:
 ---------
-* Assigning data-ui-tabs attrubute (for instance) to the div that holds your ul and tab divs is all you need to setup the tabs widget
-* Supports all of the current standart widgets and can be easily configured to support your custom widgets
-* When loading html with ajax, call .uiinit() on the element that holds the new dom, and all widgets will be initialized
-** If you only changed the innerHTML of the element, call .uiinit(true) to skip reinitializing the containing element
+* Assigning data-ui="tabs" attrubute (for instance) to the div that holds your ul and tab divs is all you need to setup the tabs widget
+* Works with all widgets (custom or bundeled) with no additional configuration
+* Uses livequery so you don't need to do anything when loading new DOM dynamically
+* Automatic destroy for all widgets that are removed from DOM
 
 > Example: 
 
-	<p data-ui-buttonset><a href="#" data-ui-button data-ui-button-icons-primary="ui-icon-check">test 1</a><a href="#">test 2</a></p>
-	<div data-ui-tabs>
+	<p data-ui="buttonset"><a href="#" data-ui="button" data-ui-button-icons-primary="ui-icon-check">test 1</a><a href="#">test 2</a></p>
+	<div data-ui="tabs">
 		<ul>
 			<li><a href="#tab1">tab1</a></li>
 			<li><a href="#tab2">tab2</a></li>
@@ -27,11 +27,10 @@ See example.html for a more thorough example of the usage
 
 Usage
 -----
-1. Load the jqueryui-init.js after loading jquery and jqueryui
-2. Register your custom widgets (all widgets that are not in the standart jqueryui package) using $.uiinit('widget-name')
-3. When adding a new dom element - call newelement.uiinit()
-4. When adding changing the innerHTML of an element call element.uiinit(true)
-5. When removing element an element from the dom, before you call .remove use .uidestroy() - toremove.uidestroy().remove()
+1. Load the jqueryui-init.js after loading jquery, jqueryui, and livequery. Thats it! Use data-ui="widget1 widget2" to mark your widgets
+2. Load some custom widgets
+3. Add some new dom
+4. Remove some dom
 
 jQuery functions
 ----------------

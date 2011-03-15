@@ -1,5 +1,5 @@
 /*!
- * jQueryUI Init v0.0.3
+ * jQueryUI Init v0.0.4
  * http://github.com/sash/jqueryui-init/
  *
  * Copyright 2010, Alexander Alexiev
@@ -42,85 +42,61 @@
 				return res
 			}
 		},
-		'_uiinit':function(element, inner, selfOnly){
-			var t;
-			if (selfOnly){
-				t = $();
+		'_uiinit':function(element){
+			// Prevent dual init
+			if (!$(this).attr('data-ui-'+element)){
+				$(this).attr('data-ui-'+element, element)
+				// Initialize the widget
+				eval('$(this).'+element+'($(this).attrs("data-ui-'+element+'-"))')
 			}
-			else{
-				t = this.find('[data-ui-'+element+']')	
-			}
-			if ((!inner || selfOnly) && this.is('[data-ui-'+element+']')){ t = t.size() ? this : t.add(this); }
-			t.each(function(){
-				// Prevent dual init
-				if (!$(this).data('uiinited-'+element)){
-					$(this).data('uiinited-'+element, true)
-					// Initialize the widget
-					eval('$(this).'+element+'($(this).attrs("data-ui-'+element+'-"))')
-				}
-			})
-			return this
-		},
-		'_uidestroy':function(element, inner, selfOnly){
-			var t;
-			if (selfOnly){
-				t = $();
-			}
-			else{
-				t = this.find('[data-ui-'+element+']')	
-			}
-			if ((!inner || selfOnly) && this.is('[data-ui-'+element+']')){ t = t.size() ? this : t.add(this); }
-			t.each(function(){
-				// Prevent dual destroy
-				if ($(this).data('uiinited-'+element)){
-					$(this).data('uiinited-'+element, false)
-					// Destroy the widget
-					eval('$(this).'+element+'("destroy")')
-				}
-			})
-			return this
-		},
-		'uiinit':function(inner, selfOnly){
-			var el = this
 			
-			$.each(uiinit, function(i, name){
-				el._uiinit(name, inner, selfOnly)
+			return this
+		},
+		'_uidestroy':function(element){
+			
+			// Prevent dual destroy
+			if ($(this).attr('data-ui-'+element)){
+				$(this).removeAttr('data-ui-'+element)
+				// Destroy the widget
+				
+				eval('$(this).'+element+'("destroy")')
+			}
+	
+			return this
+		},
+		'uiinit':function(){
+			var el = this
+			var inits = $(this).attr('data-ui').split(' ');
+			$.each(inits, function(v, i){
+				$(el)._uiinit(i)
 			})
 			this.trigger('uiinit');
 			return this
 		},
-		'uidestroy':function(inner, selfOnly){
+		'uidestroy':function(){
 			var el = this
-			$.each(uiinit, function(i, name){
-				el._uidestroy(name, inner, selfOnly)
+			var inits = $(this).attr('data-ui').split(' ');
+			
+			$.each(inits, function(v, i){
+				
+				$(el)._uidestroy(i)
 			})
 			this.trigger('uidestroy');
 			return this
 		}
 	})
 	
-	
-	var uiinit=[];
-	var domready = false;
-	$.uiinit=function(name){
-		if (typeof $.fn.livequery == 'function'){
-			// Register the initialization handler
-			$('*[data-ui-'+name+']').livequery(function(){
-				$(this)._uiinit(name, false, true)
-			}, function (){
-				$(this)._uidestroy(name, false, true)
-			})
-		}
-		else{
-			uiinit.push(name);
-			// A fix that allows widgets added after the dom has loaded to be also initialized
-			if (domready) $('body')._uiinit(name)
-		}
-		
-		return $
+	if (typeof $.fn.livequery == 'function'){
+		// Register the initialization handler
+		$('*[data-ui]').livequery(function(){
+			$(this).uiinit();
+			
+		}, function (){
+			$(this).uidestroy();
+		})
 	}
-	$.uiinit('button').uiinit('buttonset').uiinit('accordion').uiinit('datepicker').uiinit('dialog').uiinit('progressbar').uiinit('slider').uiinit('tabs')
-	.uiinit('draggable').uiinit('droppable').uiinit('resizable').uiinit('selectable').uiinit('sortable');
+	else{
+		throw 'jqueryui-init: livequery is not included'
+	}
 	
-	$(function(){$('body').uiinit(); domready = true;})
 })(jQuery)
