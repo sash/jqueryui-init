@@ -6,8 +6,11 @@ Features:
 ---------
 * Assigning data-ui="tabs" attrubute (for instance) to the div that holds your ul and tab divs is all you need to setup the tabs widget
 * Works with all widgets (custom or bundeled) with no additional configuration
+** When you load your widgets before the dom has finished loading, your widgets will be automatically initialized.
+** If you load a widget at a later stage, you must initialize any dom elements already on the page that use it like this: $('*[data-ui~="widgetName"]').uiinit(); 
 * Uses livequery so you don't need to do anything when loading new DOM dynamically
 * Automatic destroy for all widgets that are removed from DOM
+* You will never initialize widget twice (unless of course you want to ;)
 
 > Example: 
 

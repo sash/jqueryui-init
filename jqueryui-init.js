@@ -44,7 +44,7 @@
 		},
 		'_uiinit':function(element){
 			// Prevent dual init
-			if (!$(this).attr('data-ui-'+element)){
+			if (!$(this).attr('data-ui-'+element) && typeof $.fn[element] == 'function'){
 				$(this).attr('data-ui-'+element, element)
 				// Initialize the widget
 				eval('$(this).'+element+'($(this).attrs("data-ui-'+element+'-"))')
