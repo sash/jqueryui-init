@@ -36,10 +36,10 @@ Usage
 
 jQuery functions
 ----------------
-.attrs: function that returns an object with all attributes on the element (optionally beginning with param).
-.addUi(widgets): add new widgets to data-ui. A clone of .addClass
-.removeUi(widgets): remove widgets from data-ui. A clone of .removeClass
-.toggleUi(widgets): toggle widgets in data-ui. A clone of .toggleClass
-.hasUi(widgets): checks if widgets are set in data-ui. A clone of .hasClass
+* .attrs: function that returns an object with all attributes on the element (optionally beginning with param).
+* .addUi(widgets): add new widgets to data-ui. A clone of .addClass
+* .removeUi(widgets): remove widgets from data-ui. A clone of .removeClass
+* .toggleUi(widgets): toggle widgets in data-ui. A clone of .toggleClass
+* .hasUi(widgets): checks if widgets are set in data-ui. A clone of .hasClass
 
 Note: The *Ui functions are designed as helpers only. You can directly manipulate the data-ui attribute to the same effect
